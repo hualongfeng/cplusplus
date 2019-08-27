@@ -1,9 +1,10 @@
 #SRC = $(shell ls *.cc)
 SRC = $(wildcard *.c *.cc)
 OBJS = $(patsubst %.c,%.o,$(patsubst %.cc,%.o,$(SRC)))
+DEPS = $(patsubst %.o, %d, $(OBJS))  
 XX = g++
 CC = gcc
-CFLAGS = -Wall -O -g
+CFLAGS = -Wall -g 
 TARGET = a.out
 
 $(TARGET): $(OBJS)
@@ -15,5 +16,7 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+-include $(DEPS)        
+
 clean:
-	rm -f test *.o
+	rm -f *.o $(TARGET)
